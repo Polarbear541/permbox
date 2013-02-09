@@ -15,6 +15,12 @@ Upload ./inc/languages/english/permbox.php to ./inc/languages/english/
 Go to ACP > Plugins > Install & Activate
 Configure PermBox settings to control when the box shows.
 
+Update Instructions (1.0 -> 1.1):
+Uninstall the old version by going to ACP > Plugins > Uninstall
+Upload the new plugin files as described above.
+Install the new version by going to ACP > Plugins > Install & Activate
+Alter the settings if you wish.
+
 Plugin Licence:
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
