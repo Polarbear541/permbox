@@ -75,13 +75,18 @@ function permbox_install()
 	//Insert Main Templates
 	$templateone = array(
 		'title'		=> 'permbox_thread',
-		'template' => $db->escape_string('<div style="width:275px;">
+		'template' => $db->escape_string('<div style="width:275px;" id="permbox">
 		<table cellspacing="{$theme[\'borderwidth\']}" cellpadding="{$theme[\'tablespace\']}" border="0" class="tborder"> 
 		<tr> <td class="thead" align="center" colspan="2"><strong>{$lang->permbox_title_thread}</strong></td> </tr> 
 		<tr> <td class="trow1"> You <b>{$canpostreply}</b> {$lang->permbox_creply} {$lang->permbox_inthread} </td> </tr> 
 		<tr> <td class="trow2"> You <b>{$canedit}</b> {$lang->permbox_cedit} {$lang->permbox_inthread} </td> </tr>
 		<tr> <td class="trow1"> You <b>{$candelete}</b> {$lang->permbox_cdelete} {$lang->permbox_inthread} </td> </tr>
 		<tr> <td class="trow2"> You <b>{$canvote}</b> {$lang->permbox_cvote} {$lang->permbox_inthread} </td> </tr>
+		<tr> <td class="trow2"> You <b>{$canhtml}</b> {$lang->permbox_chtml} {$lang->permbox_inthread} </td> </tr>
+		<tr> <td class="trow2"> You <b>{$canmycode}</b> {$lang->permbox_cmycode} {$lang->permbox_inthread} </td> </tr>
+		<tr> <td class="trow2"> You <b>{$cansmilies}</b> {$lang->permbox_csmilies} {$lang->permbox_inthread} </td> </tr>
+		<tr> <td class="trow2"> You <b>{$canimg}</b> {$lang->permbox_cimgcode} {$lang->permbox_inthread} </td> </tr>
+		<tr> <td class="trow2"> You <b>{$canvideo}</b> {$lang->permbox_cvideocode} {$lang->permbox_inthread} </td> </tr>
 		</table> </div>'),
 		'sid'		=> -2,
 		'version'	=> '160',
@@ -90,7 +95,7 @@ function permbox_install()
 	$db->insert_query('templates', $templateone);
 	$templatetwo = array(
 		'title'		=> 'permbox_forum',
-		'template' => $db->escape_string('<div style="width:275px;">
+		'template' => $db->escape_string('<div style="width:275px;" id="permbox">
 		<table cellspacing="{$theme[\'borderwidth\']}" cellpadding="{$theme[\'tablespace\']}" border="0" class="tborder"> 
 		<tr> <td class="thead" align="center" colspan="2"><strong>{$lang->permbox_title_forum}</strong></td> </tr> 
 		<tr> <td class="trow1"> You <b>{$canpostthread}</b> {$lang->permbox_cthread} {$lang->permbox_inforum} </td> </tr>
@@ -148,7 +153,7 @@ function permbox_deactivate() //When plugin uninstalled
 
 function permbox_showthread() //Show permission box in thread
 {
-	global $mybb, $templates, $permbox, $lang, $thread;
+	global $mybb, $templates, $permbox, $lang, $thread, $forum;
 	if($mybb->settings['permbox_thread_onoff'] == 1)
 	{
 		$lang->load('permbox');
@@ -192,6 +197,56 @@ function permbox_showthread() //Show permission box in thread
 		else
 		{
 			$canvote = $lang->permbox_cannot;
+		}
+
+		//HTML
+		if($forum['allowhtml'] == 1)
+		{
+			$canhtml = $lang->permbox_can;
+		}
+		else
+		{
+			$canhtml = $lang->permbox_cannot;
+		}
+
+		//MyCode
+		if($forum['allowmycode'] == 1)
+		{
+			$canmycode = $lang->permbox_can;
+		}
+		else
+		{
+			$canmycode = $lang->permbox_cannot;
+		}
+
+		//Smilies
+		if($forum['allowsmilies'] == 1)
+		{
+			$cansmilies = $lang->permbox_can;
+		}
+		else
+		{
+			$cansmilies = $lang->permbox_cannot;
+		}
+
+		//IMG MyCode
+		if($forum['allowimgcode'] == 1)
+		{
+			$canimg = $lang->permbox_can;
+		}
+		else
+		{
+			$canimg = $lang->permbox_cannot;
+		}
+
+		//Video MyCode
+		if($forum['allowvideocode'] == 1)
+		{
+			$canvideo = $lang->permbox_can;
+		}
+		else
+		{
+			$canvideo = $lang->permbox_cannot;
 		}
 		
 		eval("\$permbox = \"".$templates->get('permbox_thread')."\";");
